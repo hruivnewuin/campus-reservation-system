@@ -10,4 +10,10 @@ In this markdown, each person will log per work as logs.
 
 09/04 | Faith Paredes | README.txt | Renamed READ.md to README.txt and updated its content | commits ab55117, 50644e1 
 
+09/10 | Faith Paredes | include/, src/, (repo structure) | Uploaded skeleton source/header files and reorganized them into include/ and src/ folders (ReservationManager.h -> include/, Reservation.cpp -> src/) | commits e6fa237, ec09dd0, 0bcf1ca, 674612c, 2401817
+
+09/11 | Faith Paredes | ComplexityAnalysis.md | Started drafting the complexity analysis document (~50 complete) | commit 996ea9a "Create Complexity-Analysis.md created (%50)"
+
+09/11 | Faith Paredes | CONTRIBUTION_LOG.md | Created the contribution log file for the team to track work | commits fdd0203 "Create Contribution-Log.md"
+
 

@@ -4,7 +4,7 @@ Milestone 1: Core System Development
 
 TEAM MEMBERS
 ------------
-- Faith Paredes: (Job here)
+- Faith Paredes: Reservation Manager
 - Isiah Ndanzia: (Job here)
 - NAME HERE: (Job here)
 

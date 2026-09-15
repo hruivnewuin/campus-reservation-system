@@ -1,0 +1,15 @@
+# build
+*.o
+*.obj
+*.exe
+*.out
+reservation_system
+
+#editor files
+.vscode/
+.idea/
+*.swp
+
+# os files
+.DS_Store
+Thumbs.db

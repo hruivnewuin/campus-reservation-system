@@ -35,7 +35,7 @@ ComplexityAnalysis.md
 
 HOW TO BUILD
 -------------
-From the Project1/ directory, on CELL or any g++ envoirnment:
+From the Project1/ directory, on CELL or any g++ environment:
   g++ -std=c++17 -Wall - Iinclude src/*.cpp -o reservation_system
 
 HOW TO RUN

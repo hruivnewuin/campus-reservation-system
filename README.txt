@@ -5,7 +5,7 @@ Milestone 1: Core System Development
 TEAM MEMBERS
 ------------
 - Faith Paredes: (Job here)
-- NAME HERE: (Job here)
+- Isiah Ndanzia: (Job here)
 - NAME HERE: (Job here)
 
 PROJECT STRUCTURE

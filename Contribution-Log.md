@@ -16,4 +16,4 @@ In this markdown, each person will log per work as logs.
 
 09/11 | Faith Paredes | CONTRIBUTION_LOG.md | Created the contribution log file for the team to track work | commits fdd0203 "Create Contribution-Log.md"
 
-
+09/15 | Isiah Ndanzia | WaitingList.cpp, CanellationHistory.cpp, Reservationrecord.h, waitinglist.h, cancellationhistory.h 

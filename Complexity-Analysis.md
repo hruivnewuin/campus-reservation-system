@@ -34,11 +34,33 @@ making insertion **O(n)**. Our implementation maintains only a `head` pointer, s
   
 ## 3. Waiting List Processing (Queue)
 **Operation:** `WaitingList::addToWaitingList`, `WaitingList::removeFromWaitingList`
+The waiting list is implemented as a linked list backed queue with both a front and a rear pointer.
+Maintaining both front and rear pointers is what keeps both enqueue and dequeue at O(1). Without a rear pointer, enqueue would degrade to O(n) because the list would need to be walked to find the last node.
+
+- **Enqueue (add to waiting list): O(1)**
+  A new node is attached directly at rear and then its updated. No traversal.
+- **Dequeue (remove from waiting list and serve next student): O(1)**
+  The node at the `front` is removed directly, and the `front` is advanced to the next node. No traversal.
+- **Display waiting list: O(n)**
+  Printing every waiting request requires visiting all `n` nodes once.
 
 ## 4. Undo Cancellation (Stack)
 **Operation:** `CancellationHistory::storeCancellation`, `CancellationHistory::restoreLastCancellation`
+The cancellation history is implemented as a linked list backed stack, where push and pop both operate on the top pointer.
 
-## Summary 
+- **Store cancellation (push): O(1)**
+  A new node is created and linked in as the new `top`.
+- **Restore last cancellation (pop): O(1)**
+  The node at `top` is removed and top is advanced to the next node because only the most recently cancelled reservation can ever be restored, no traversal.
+- **Display waiting list: O(n)**
+  Printing the full history by most recent requires visiting all n nodes once.
+
+## Summary - why these structure were picked
+- **Linked List for reservations:** reservations are created and cancelled
+  frequently and the total count is not known ahead of time, so a dynamically sized structure with O(1) insertion is preferable to a fixed size array.
+- **Queue for waiting lists:** requests must be served in the order they arrived, which is exactly the FIFO queue.
+- **Stack for cancellation history:** only the simple most recently cancelled a reservation can be undone, which is the LIFO stack. It doesn't need searching to find the most recent item.
+
 
 
 

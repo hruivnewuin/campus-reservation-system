@@ -56,10 +56,10 @@ reservations.txt:
 
 DATA STRUCTURES USED
 ---------------------
-- Linked List -> ReservationManager: stores active reservations (insert, remove, traverse, display)
-- Queue -> WaitingList: FIFO waiting list (enqueue, dequeue, display)
-- Stack -> CancellationHistory: LIFO cancellation history (push on cancel, pop to undo, display)
-- Vector -> ResourceManager: resource inventory
+Linked List -> ReservationManager: stores active reservations (insert, remove, traverse, display)
+Queue -> WaitingList: FIFO waiting list (enqueue, dequeue, display)
+Stack -> CancellationHistory: LIFO cancellation history (push on cancel, pop to undo, display)
+Vector -> ResourceManager: resource inventory
 
 VALIDATION RULES
 ----------------

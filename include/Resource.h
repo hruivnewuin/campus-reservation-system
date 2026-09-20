@@ -14,7 +14,7 @@ private:
 
 public:
     Resource();
-    Resource(const std::string& id, const std::string& name, const std::string& type, bool is Available);
+    Resource(const std::string& id, const std::string& name, const std::string& type, bool isAvailable);
      
     //getters
     std::string getresourceID() const;

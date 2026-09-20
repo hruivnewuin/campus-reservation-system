@@ -24,5 +24,5 @@ In this markdown, each person will log per work as logs.
 
 09/19 | Faith Paredes | src/ & include/ | Created and uploaded the new Resource.h and Resource.cpp files and uploaded Main.cpp and ReservationManager.cpp | commits d4b727a, f9cc1d9, 1630afd, fc1fc49
 
-
+09/20 | Faith Paredes | repo | Merged branch into main with minor edits to README.txt | ece3519
 

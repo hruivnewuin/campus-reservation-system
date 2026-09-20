@@ -9,13 +9,13 @@ Resource::Resource(const std::string& id, const std::string& name, const std::st
 
 std::string Resource::getResourceID() const { return resourceID; }
 std::string Resource::getResourceName() const { return resourceName; }
-std::string Resource::getResourceType() const { return resourcetype; }
+std::string Resource::getResourceType() const { return resourceType; }
 bool Resource::isAvailable() const { return available; }
 
-void Resource:setResourceID(const std::string& id) { resourceID = id; }
-void Resource:setResourceName(const std::string& name) { resourceName = name; }
-void Resource:setResourceType(const std::string& type) { resourceType = type; }
-void Resource:setAvailable(const std::string& isAvailable) { available = isAvailable; }
+void Resource::setResourceID(const std::string& id) { resourceID = id; }
+void Resource::setResourceName(const std::string& name) { resourceName = name; }
+void Resource::setResourceType(const std::string& type) { resourceType = type; }
+void Resource::setAvailable(bool std::string& isAvailable) { available = isAvailable; }
 
 void Resource::display() const {
     std::cout << "ID: " << resourceID << " | Name: " << resourceName << " | Type: " << resourceType << " | Available: " << (available ? "Yes" : "No") << std::endl;
@@ -28,7 +28,7 @@ ResourceManager::ResourceManager() {}
 bool ResourceManager::loadFromFile(const std::string& filename) {
     std::ifstream inFile(filename);
     if (!inFile.is_open()) {
-        std::cerr << "Error: could not open file " << filename << std:endl;
+        std::cerr << "Error: could not open file " << filename << std::endl;
         return false;
     }
     std::string line;
@@ -48,7 +48,7 @@ bool ResourceManager::loadFromFile(const std::string& filename) {
         resources.push_back(Resource(id, name, type, avail));
     }
 
-    inFile.close()
+    inFile.close();
     return true;
 }
 
@@ -70,7 +70,7 @@ void ResourceManager::displayAllResources() const {
 
 void ResourceManager::displayAvailability() const {
     bool foundAny = false;
-    if (const auto& r : resources) {
+    for (const auto& r : resources) {
         if (r.isAvailable()) {
             r.display();
             foundAny = true;
@@ -94,7 +94,7 @@ Resource* ResourceManager::findResourceByID(const std::string& resourceID) {
     
 }
 
-bool ResourceManager::setResourceAvailablity(const std::string& resourceID, bool isAvailable) {
+bool ResourceManager::setResourceAvailability(const std::string& resourceID, bool isAvailable) {
 
     Resource* r = findResourceByID(resourceID);
     if (r == nullptr) return false;

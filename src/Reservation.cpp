@@ -4,8 +4,8 @@
 Reservation::Reservation()
     : reservationID(0), studentID(0), studentName(""), resourceID(""), reservationDate("") {}
   
-Reservation::Reservation(int resID, int studID, const std::string& studName, const std::string& resourceID,  const std::string& date)
-    : reservationID(resID), studentID(studID), studentName(studName), resourceID(resourceID), reservationDate(date) {}
+Reservation::Reservation(int resID, int studID, const std::string& studName, const std::string& resID_resource,  const std::string& date)
+    : reservationID(resID), studentID(studID), studentName(studName), resourceID(resID_resource), reservationDate(date) {}
 
 int Reservation::getReservationID() const { return reservationID; }
 int Reservation::getStudentID() const { return studentID; }

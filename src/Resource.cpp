@@ -36,7 +36,7 @@ bool ResourceManager::loadFromFile(const std::string& filename) {
 
         if (line.empty()) continue;
 
-        std::stringstream ss(line)
+        std::stringstream ss(line);
         std::string id, name, type, availStr;
 
         if (!std::getline(ss, id, '|')) continue;

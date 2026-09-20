@@ -14,7 +14,7 @@ private:
 
 public:
     Reservation();
-    Reservation(int resID, studID, const std::string& studName, const std::string& resourceID, const std::string& date);
+    Reservation(int resID, int studID, const std::string& studName, const std::string& resourceID, const std::string& date);
 
     // Getters
     int getReservationID() const;

@@ -1,16 +1,19 @@
 #include <iostream>
 #include <limits>
 #include <string>
+#include <map>
 #include "Resource.h"
 #include "Reservation.h"
+#include "ReservationManager.h"
 #include "WaitingList.h"
 #include "CancellationHistory.h"
+#include "Reservationrecord.h"
 
 //clears a failed std:cin state and discards the rest of the line
 //used for basic invalid input handling on menu choices
 static void clearInputError() {
     std::cin.clear()
-    std:cin.ignore(std::numeric+limits<std::streamsize>::max(), '\n');
+    std:cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 }
 
@@ -26,6 +29,19 @@ static void printMenu() {
     std::cout << "8. Exit\n";
     std::cout << "Enter Choice: ";  
 }
+//reservation class and reservationrecord are two different shared types.
+//these two convert between them at the boundary.
+static ReservationRecord toRecord(const Reservation& r) {
+    ReservationRecord rec;
+    rec.reservationId = r.getReservationID();
+    rec.studentId = r.getStudentID();
+    rec.studentName = r.getStudentName();
+    rec.reservationDate = r.getReservationDate();
+    return rec;
+}
+static Reservation fromRecord(const ReservationRecord& rec) {
+    return Reservation(rec.reservationId, rec.studentId, rec.studentName, rec.resourceId, rec.reservationDate);
+}
 
 int main() {
     ResourceManager resourceManager;
@@ -34,7 +50,8 @@ int main() {
 
     //for milestone 1, this will use a shared list
 
-    WaitingList waitingList;
+    //one waiting list per resource, created on first use
+    std::map<std::string, WaitingList> waitingLists;
 
     if (!resourceManager.loadFromFile("data/resources.txt")) {
         std::cout << "Warning: continuing with an empty resource list.\n";
@@ -68,7 +85,7 @@ int main() {
         }
         case 2: {
             std::string resourceID, studentName, date;
-            int studnetID;
+            int studentID;
 
             std::cout << "Resource ID: ";
             std::cin >> resourceID;
@@ -76,7 +93,7 @@ int main() {
             std::cin >> studentID;
             if (std::cin.fail()) {
                 clearInputError();
-                std::cout << "Invalid student ID."
+                std::cout << "Invalid student ID.\n";
                 break;
             }
             std::cout << "Student Name: ";
@@ -86,7 +103,7 @@ int main() {
             std::cin >> date;
 
             int newID = reservationManager.generateNextReservationID();
-            Reservation newRes(newID, student, studentName, resourceID, date);
+            Reservation newRes(newID, studentID, studentName, resourceID, date);
 
             if (!reservationManager.validateReservationRequest(newRes, resourceManager)) {
                 Resource* r = resourceManager.findResourceByID(resourceID);
@@ -95,13 +112,19 @@ int main() {
                 }
                 else if (!r->isAvailable()) {
                     //resource is out of service -> offer waiting list
-                    WaitingRequest req;
-                    req.student = Student(studenttID, studentName);
-                    req.resourceID = resourceID;
-                    req.requestDate = date;
-                    waitingList.addToWaitingList(req);
-                    std::cout << "resource is unavailable. Added to waiting list.\n";
+                    auto it = waitingLists.find(resourceID);
+                    if ( it == waitingLists.end()) {
+                        it = waitingLists.emplace(resourceID, WaitingList(resourceID)).first;
+                    }
+                    ReservationRecord req = toRecord(newRes);
+                    if (it->second.addStudent(req)) {
+                        std::cout << "resource is unavailable. Added to waiting list.\n";
+                    }
+                    else {
+                        std::cout << "Could not add to waiting list (duplicate or invalid request).\n";
+                    }
                 }
+                
                 else {
                     //resource is in service but already booked on that date
                     std::cout << "That resource is already booked on " << date << ". Try a different date or resource.\n";
@@ -114,53 +137,75 @@ int main() {
         }
         case 3: {
             int resID;
-            std::cout << "Reservation ID to cancel: "
+            std::cout << "Reservation ID to cancel: ";
             std::cin >> resID;
             if (std::cin.fail()) {
                 clearInputError();
-                std::cout << "Invalid reservation Id.\n";
+                std::cout << "Invalid reservation ID.\n";
                 break;
             }
             Reservation removed;
-            if (reservationMananger.removeReservation(resId, removed)) {
-                cancellationHistory.storeCancellation(removed);
+            if (reservationMananger.removeReservation(resID, removed)) {
+                cancellationHistory.storeCancelled(removed);
                 std::cout << "Reservation Cancelled. Added to cancellation history.\n";
 
+            //automatically offer the freed resource to the next waiting student if any
+                auto it = waitingLists.find(removed.getResourceID());
+                if (it != waitingLists.end() && !it->second.empty()) {
+                    bool assigned = it->second.processNext([&](const ReservationRecord& rec) {
+                        Reservation promoted = fromRecord(rec);
+                        promoted.setReservationID(reservationManager.generateNextReservationID());
+                        return reservationManager.insertReservation(promoted);
+    
+                    });
+                    if (assigned) {
+                        std::cout << "Resource " << removed.getResourceID() << " automatically assigned to the next waiting student.\n";
+                    }
+                }
             }
+                
+                
             else {
-                std::cout << "Reservation ID not found."
+                std::cout << "Reservation ID not found.";
             }
             break;
         }
         case 4: {
             std::cout << "\n--- Waiting List ---\n";
-            waitingList.displayWaitingList();
+            if (waitingLists.empty()) {
+                std::cout << "No waiting lists yet.\n";
+            else {
+                for (const auto& entry : waitingLists) {
+                    entry.second.display(std::cout);
+                }
+            }
             break;
         }
         case 5: {
-            Reservation restored;
-            if (cancellationHistory.restoreLastCancellation(restored)) {
-                reservationManager.insertReservation(restored);
-                std::cout << "Reservation Restored Successfully.\n"
+            bool restoredAny = cancellationHistory.undoCancellation([&](const ReservationRecord& rec) {
+                return reservationManager.insertReservation(fromRecord(rec));
+            });
+            if (restoredAny) {
+                std::cout << "Reservation Restored Successfully.\n";
             }
             else {
-            std::cout << "No cencellations to undo\n";   
+            std::cout << "No cancellations to undo\n";   
             }
             break;
         }
         case 6: {
             std::cout << "\n--- Active Reservations ---\n";
-            reservationManager.displayActivereservations();
+            reservationManager.displayActiveReservations();
             break;
         }
         case 7: {
             std::cout << "\n--- Cancellation History ---\n";
-            cancellationHistory.displayCancellationHistory();
+            cancellationHistory.display(std::cout);
             break;
         }
         case 8: {
             running = false;
-            std::cout << "Goodbye!\n"
+            std::cout << "Goodbye!\n";
             break;
         }
         default:

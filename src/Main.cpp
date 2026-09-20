@@ -7,13 +7,13 @@
 #include "ReservationManager.h"
 #include "WaitingList.h"
 #include "CancellationHistory.h"
-#include "Reservationrecord.h"
+#include "ReservationRecord.h"
 
 //clears a failed std:cin state and discards the rest of the line
 //used for basic invalid input handling on menu choices
 static void clearInputError() {
-    std::cin.clear()
-    std:cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 }
 
@@ -36,6 +36,7 @@ static ReservationRecord toRecord(const Reservation& r) {
     rec.reservationId = r.getReservationID();
     rec.studentId = r.getStudentID();
     rec.studentName = r.getStudentName();
+    rec.resourceId = r.getResourceID();
     rec.reservationDate = r.getReservationDate();
     return rec;
 }
@@ -145,8 +146,8 @@ int main() {
                 break;
             }
             Reservation removed;
-            if (reservationMananger.removeReservation(resID, removed)) {
-                cancellationHistory.storeCancelled(removed);
+            if (reservationManager.removeReservation(resID, removed)) {
+                cancellationHistory.storeCancelled(toRecord(removed));
                 std::cout << "Reservation Cancelled. Added to cancellation history.\n";
 
             //automatically offer the freed resource to the next waiting student if any
@@ -174,6 +175,7 @@ int main() {
             std::cout << "\n--- Waiting List ---\n";
             if (waitingLists.empty()) {
                 std::cout << "No waiting lists yet.\n";
+            }
             else {
                 for (const auto& entry : waitingLists) {
                     entry.second.display(std::cout);

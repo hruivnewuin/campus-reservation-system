@@ -14,8 +14,8 @@ bool Resource::isAvailable() const { return available; }
 
 void Resource:setResourceID(const std::string& id) { resourceID = id; }
 void Resource:setResourceName(const std::string& name) { resourceName = name; }
-void Resource:setResourceID(const std::string& type) { resourceType = type; }
-void Resource:setResourceID(const std::string& isAvailable) { available = isAvailable; }
+void Resource:setResourceType(const std::string& type) { resourceType = type; }
+void Resource:setAvailable(const std::string& isAvailable) { available = isAvailable; }
 
 void Resource::display() const {
     std::cout << "ID: " << resourceID << " | Name: " << resourceName << " | Type: " << resourceType << " | Available: " << (available ? "Yes" : "No") << std::endl;
@@ -34,15 +34,15 @@ bool ResourceManager::loadFromFile(const std::string& filename) {
     std::string line;
     while (std::getline(inFile, line)) {
 
-        if(line.empty())continue;
+        if (line.empty()) continue;
 
         std::stringstream ss(line)
         std::string id, name, type, availStr;
 
-        if (!std::getline(ss, id, '|'))continue;
-        if (!std::getline(ss, name, '|'))continue;
-        if (!std::getline(ss, type, '|'))continue;
-        if (!std::getline(ss, availStr, '|'))continue;
+        if (!std::getline(ss, id, '|')) continue;
+        if (!std::getline(ss, name, '|')) continue;
+        if (!std::getline(ss, type, '|')) continue;
+        if (!std::getline(ss, availStr, '|')) continue;
 
         bool avail = (availStr == "Available");
         resources.push_back(Resource(id, name, type, avail));
@@ -52,8 +52,9 @@ bool ResourceManager::loadFromFile(const std::string& filename) {
     return true;
 }
 
-void ResourceManager::addResource(const Resource& resource) {
+bool ResourceManager::addResource(const Resource& resource) {
     resources.push_back(resource);
+    return true;
 }
 
 void ResourceManager::displayAllResources() const {

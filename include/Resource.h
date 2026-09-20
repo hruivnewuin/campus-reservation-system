@@ -17,9 +17,9 @@ public:
     Resource(const std::string& id, const std::string& name, const std::string& type, bool isAvailable);
      
     //getters
-    std::string getresourceID() const;
-    std::string getresourceName() const;
-    std::string getresourceType() const;
+    std::string getResourceID() const;
+    std::string getResourceName() const;
+    std::string getResourceType() const;
     bool isAvailable() const;
 
     //setters
@@ -60,11 +60,11 @@ public:
     //finds a resource by ID. Returns a  pointer to the resource in the internal vector
     //, or null ptr if not found. It's used by ReservationManager 
     //to validate reservation requests
-    Resource* findResourceByID(const std::string& ResourceID);
+    Resource* findResourceByID(const std::string& resourceID);
 
     //updates the availability of a resource by ID
     //returns true if the resource was found and updated
-    bool setResourceAvaility(const std::string& resourceID, bool isAvailable);
+    bool setResourceAvailability(const std::string& resourceID, bool isAvailable);
 
     //returns the number of resources currently stored
     int getResourceCount() const;

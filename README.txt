@@ -12,26 +12,14 @@ PROJECT STRUCTURE
 -----------------
 Project1/
   include/    -- Header Files (class declarations) --
-    Student.h
-    Resource.h
-    Reservation.h
-    ReservationManager.h
-    WaitingList.h
-    CancellationHistory.h
-src/         -- Implementation Files --
-    main.cpp
-    Student.cpp
-    Resource.cpp
-    Reservation.cpp
-    ReservationManager.cpp
-    WaitingList.cpp
-    CancellationHistory.cpp
-data/        
-  resources.txt
-  reservations.txt.
-README.txt
-ComplexityAnalysis.md
-.gitignore
+  src/         -- Implementation Files --
+  data/        -- Resource inventory & existing reservation to be loaded at startup--
+    resources.txt
+    reservations.txt.
+  README.txt
+  ComplexityAnalysis.md
+  GroupContributionReport.docx
+  .gitignore
 
 HOW TO BUILD
 -------------
@@ -80,9 +68,17 @@ A reservation request is rejected if:
 - or the same resource already has an active reservation on the same date
 - or if the resource is marked unavailable , in which case the request is routed to the waiting list instead
 
+TESTING PERFORMED
+------------------
+File loading:  verified all 20 resources and 20 reservations load correctly from the provided data files.
+Reservations: created and cancelled reservations. Confirmed the correct behavior for data conflicts, unavailable resources, and duplicate IDs.
+Undo: confirmed the most recently cancelled reservation is restores correctly, and that undoing with an empty history is handled gracefully.
+Waiting List: confirmed FIFO add/remove order.
+Invalid input: confirmed non-numeric menu input and invalid reservations IDs are handled without crashing.
+
 GITHUB REPOSITORY
 ------------------
-
+https://github.com/hruivnewuin/campus-reservation-system
 
 
     

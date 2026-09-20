@@ -37,7 +37,7 @@ bool ReservationManager::loadFromFile(const std::string& filename) {
             continue;
         }
 
-        Reservation res(resID, studID, studName, resourceID, resourceID, date);
+        Reservation res(resID, studID, studName, resourceID, date);
         insertReservation(res);
 
         if (resID >= nextReservationID) {

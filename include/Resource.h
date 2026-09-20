@@ -55,7 +55,7 @@ public:
     void displayAllResources() const;
 
     //diplays only resources that are currently available
-    void displayAvailablity() const;
+    void displayAvailability() const;
 
     //finds a resource by ID. Returns a  pointer to the resource in the internal vector
     //, or null ptr if not found. It's used by ReservationManager 

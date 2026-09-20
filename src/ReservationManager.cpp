@@ -10,7 +10,7 @@ ReservationManager::ReservationManager() : head(nullptr), count(0), nextReservat
 bool ReservationManager::loadFromFile(const std::string& filename) {
     std::ifstream inFile(filename);
     if (!inFile.is_open()) {
-        std::cerr << "Error: could not open file " << filename << std:endl;
+        std::cerr << "Error: could not open file " << filename << std::endl;
         return false;
     }
     std::string line;
@@ -18,7 +18,7 @@ bool ReservationManager::loadFromFile(const std::string& filename) {
 
         if(line.empty())continue;
 
-        std::stringstream ss(line)
+        std::stringstream ss(line);
         std::string resIDStr, studIDStr, studName, resourceID, date;
 
         if (!std::getline(ss, resIDStr, '|'))continue;
@@ -33,15 +33,15 @@ bool ReservationManager::loadFromFile(const std::string& filename) {
             studID = std::stoi(studIDStr);
         }
         catch (const std::exception&) {
-            std::cerr << "Skipping malformed reservation line: " << line << std:endl;
+            std::cerr << "Skipping malformed reservation line: " << line << std::endl;
             continue;
         }
 
         Reservation res(resID, studID, studName, resourceID, resourceID, date);
-        insertReservation(res)
+        insertReservation(res);
 
         if (resID >= nextReservationID) {
-            nextReserationID = resID + 1;
+            nextReservationID = resID + 1;
         }
     }
     inFile.close();
@@ -64,6 +64,7 @@ ReservationManager::~ReservationManager() {
 bool ReservationManager::insertReservation(const Reservation& reservation) {
     ReservationNode* newNode = new ReservationNode(reservation);
     newNode->next = head;
+    head = newNode;
     count++;
     return true;
 }
@@ -87,7 +88,7 @@ bool ReservationManager::removeReservation(int reservationID, Reservation& outRe
             count--;
             return true;
         }
-        prev current;
+        prev = current;
         current = current->next;
     }
     return false; // not found
@@ -131,7 +132,7 @@ bool ReservationManager::validateReservationRequest(const Reservation& reservati
     }
 
     //resource must exist and be available
-    Resource* res = resourceManager.findResourceById(reservation.getResourceID());
+    Resource* res = resourceManager.findResourceByID(reservation.getResourceID());
     if (res == nullptr) {
         std::cerr << "Validation failed: resource ID does not exist." << std::endl;
         return false;

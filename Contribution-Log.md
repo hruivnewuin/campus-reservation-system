@@ -19,3 +19,10 @@ In this markdown, each person will log per work as logs.
 09/15 | Isiah Ndanzia | WaitingList.cpp, CanellationHistory.cpp, Reservationrecord.h, waitinglist.h, cancellationhistory.h 
 
 09/15 | Caleb Djan | Creation of resource.h, resource.cpp
+
+09/15 | Faith Paredes | gitignore | Created .gitignore file | commit d71e99e
+
+09/19 | Faith Paredes | src/ & include/ | Created and uploaded the new Resource.h and Resource.cpp files and uploaded Main.cpp and ReservationManager.cpp | commits d4b727a, f9cc1d9, 1630afd, fc1fc49
+
+
+

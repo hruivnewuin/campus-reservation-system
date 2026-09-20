@@ -2,11 +2,15 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+/* Default constructor initializing an empty linked list
+Time complexity: 0(1)
+*/
 
 ReservationManager::ReservationManager() : head(nullptr), count(0), nextReservationID(1) {}
 
-//The expected file format is pipe delimited
-
+/*The expected file format is pipe delimited
+- Handles invalid inputs
+*/
 bool ReservationManager::loadFromFile(const std::string& filename) {
     std::ifstream inFile(filename);
     if (!inFile.is_open()) {
@@ -36,6 +40,11 @@ bool ReservationManager::loadFromFile(const std::string& filename) {
             std::cerr << "Skipping malformed reservation line: " << line << std::endl;
             continue;
         }
+        // Validate that IDs are positive (invalid input management)
+        if (resID <= 0 || studID <= 0) {
+            std::cerr << "Skipping line with invalid negative/ zero ID: " << line << std::endl;
+            continue:
+        }
 
         Reservation res(resID, studID, studName, resourceID, date);
         insertReservation(res);
@@ -48,7 +57,9 @@ bool ReservationManager::loadFromFile(const std::string& filename) {
     return true;
 
 }
-
+/* Destructor to erase allocated memory in linked list.
+  - Prevents memory leaks.
+*/
 ReservationManager::~ReservationManager() {
     ReservationNode* current = head;
     while (current != nullptr) {
@@ -60,9 +71,16 @@ ReservationManager::~ReservationManager() {
 
 }
 
-//inserts at the head of the list -> O(1)
+/* inserts at the head of the list -> 0(n) because of duplicate chech, else O(1).
+validates against duplicate rservation IDs
+*/
 bool ReservationManager::insertReservation(const Reservation& reservation) {
-    ReservationNode* newNode = new ReservationNode(reservation);
+    if (findReservationByID(reservation.getReservationID()) != nullptr{
+        std::cerr << "Error: Reservation ID " << rerservation.getReservationID() << " already exists. Insertion failed." << std::endl;
+    return false;
+    }
+        
+ReservationNode* newNode = new ReservationNode(reservation);
     newNode->next = head;
     head = newNode;
     count++;
@@ -82,7 +100,7 @@ bool ReservationManager::removeReservation(int reservationID, Reservation& outRe
                 head = current->next; //removing head
             }
             else {
-                prev->next = current->next;
+                prev->next = current->next; // bypassing the node
             }
             delete current;
             count--;
@@ -94,7 +112,9 @@ bool ReservationManager::removeReservation(int reservationID, Reservation& outRe
     return false; // not found
 
 }
-
+/* Traverses linked list and displays all active reservations
+Time Complexity: 0(n)
+*/
 void ReservationManager::displayActiveReservations() const {
     if (head == nullptr) {
         std::cout << "No active reservations." << std::endl;
@@ -106,7 +126,9 @@ void ReservationManager::displayActiveReservations() const {
         current = current->next;
     }
 }
-
+/* Searches linked list by ID for a specific reservation
+ Time complexity: 0(n), Worst-case
+    */
 Reservation* ReservationManager::findReservationByID(int reservationID) {
     ReservationNode* current = head;
     while (current!= nullptr) {
@@ -118,10 +140,12 @@ Reservation* ReservationManager::findReservationByID(int reservationID) {
     return nullptr;
 
 }
+/* Validates if a new reservation requests conflicts with an existing reservation, also checks if requested resource is unavailable.
+Time Complexity: 0(n)
+*/
 bool ReservationManager::validateReservationRequest(const Reservation& reservation, ResourceManager& resourceManager) const {
     //reservation ID must not already be in use, and the resource/date
     //pair must not already be booked by another active reservation
-
     ReservationNode* current = head;
     while (current != nullptr) {
         if (current->data.getResourceID() == reservation.getResourceID() && current->data.getReservationDate() == reservation.getReservationDate()) {
@@ -144,11 +168,11 @@ bool ReservationManager::validateReservationRequest(const Reservation& reservati
 
     return true;
 }
-
+// Returns total number of active reservations in linked list. Time Complexity: 0(1)
 int ReservationManager::getActiveReservationCount() const {
     return count;
 }
-
+// Generations next available unique reservation ID
 int ReservationManager::generateNextReservationID() {
     return nextReservationID++;
 }

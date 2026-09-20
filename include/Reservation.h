@@ -8,13 +8,13 @@ class Reservation {
 private:
     int reservationID;
     int studentID;
-    std::string resourceID;
     std::string studentName;
+    std::string resourceID;
     std::string reservationDate;
 
 public:
     Reservation();
-    Reservation(int resID, int studID, const std::string& studName, const std::string& resourceID, const std::string& date);
+    Reservation(int resID, int studID, const std::string& studName, const std::string& resID_resource, const std::string& date);
 
     // Getters
     int getReservationID() const;

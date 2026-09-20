@@ -4,9 +4,9 @@ Milestone 1: Core System Development
 
 TEAM MEMBERS
 ------------
-- Faith Paredes: Reservation Management
+- Faith Paredes: Resource Management
 - Isiah Ndanzia: Waiting List
-- Caleb Djan: Resource Management
+- Caleb Djan: Reservation Management
 
 PROJECT STRUCTURE
 -----------------

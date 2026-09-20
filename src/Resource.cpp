@@ -15,7 +15,7 @@ bool Resource::isAvailable() const { return available; }
 void Resource::setResourceID(const std::string& id) { resourceID = id; }
 void Resource::setResourceName(const std::string& name) { resourceName = name; }
 void Resource::setResourceType(const std::string& type) { resourceType = type; }
-void Resource::setAvailable(bool std::string& isAvailable) { available = isAvailable; }
+void Resource::setAvailable(bool isAvailable) { available = isAvailable; }
 
 void Resource::display() const {
     std::cout << "ID: " << resourceID << " | Name: " << resourceName << " | Type: " << resourceType << " | Available: " << (available ? "Yes" : "No") << std::endl;

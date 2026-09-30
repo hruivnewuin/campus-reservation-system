@@ -39,6 +39,14 @@ public:
 class ResourceManager {
 private:
     std::vector<Resource> resources;
+    //hand written Quick Sort. Sorts vec[low to high] in place
+    //byID selects the comparison field. True = compare resourceID
+    //False = compare resourceName
+    void quickSort(std::vector<Resource>& vec, int low, int high, bool byID);
+
+    //Partitions vec[low to high] around a middle element pivot and return the pivot's final index
+    //Using a middle element rather than first/last avoid Quick Sort's O(n^2) worst case on data that already sorted or reverse sorted
+    int partition(std::vector<Resource>& vec, int low, int high, bool byID);
 
 public:
     ResourceManager();
@@ -57,10 +65,22 @@ public:
     //diplays only resources that are currently available
     void displayAvailability() const;
 
-    //finds a resource by ID. Returns a  pointer to the resource in the internal vector
+    //finds a resource by ID. Returns a pointer to the resource in the internal vector
     //, or null ptr if not found. It's used by ReservationManager 
     //to validate reservation requests
     Resource* findResourceByID(const std::string& resourceID);
+
+    //Binary search for a resource by ID. Requires resources to laready be sorted by ID
+    //Call sortResourcesByID() first otherwise its undefined results
+    //Returns a pointer to the match or nulptr if not found
+    Resource* searchResourceByID(const std::string& resourceID);
+
+    //Sorts the internal resources vector in place by ID through ascending order
+    //Must be called before searchResourceByID() to work correctly
+    void sortResourceByID();
+
+    //Sorts the internal resources vector in place by resource name, A to Z
+    void sortResourcesByName();
 
     //updates the availability of a resource by ID
     //returns true if the resource was found and updated

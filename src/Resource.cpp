@@ -148,7 +148,17 @@ void ResourceManager::quickSort(std::vector<Resource>& vec, int low, int high, b
         int splitIndex = partition(vec, low, high, byID);
         quickSort(vec, low, splitIndex - 1, byID);
         quickSort(vec, splitIndex, high, byID);
-        
+    }
+}
+
+void ResourceManager::sortResourcesByID() {
+    if (resources.empty()) return;
+    quickSort(resources, 0, static_cast<int>(resources.size()) - 1, true);
+}
+void ResourceManager::sortResourcesByName() {
+    if (resources.empty()) return;
+    quickSort(resources, 0, static_cast<int>(resources.size()) - 1, false);
+}
 
 
 bool ResourceManager::setResourceAvailability(const std::string& resourceID, bool isAvailable) {

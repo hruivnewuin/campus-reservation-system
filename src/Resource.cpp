@@ -104,10 +104,10 @@ Resource* ResourceManager::searchResourceByID(const std::string& resourceID) {
     while (low <= high) {
         int mid = low + (high - low) / 2; //avoids overflow vs (low+high)/2
 
-        if (resources[mid].getResourcesID() == resourceID) {
+        if (resources[mid].getResourceID() == resourceID) {
             return &resources[mid];
         }
-        else if (resources[mid].getResourcesID() < resourceID) {
+        else if (resources[mid].getResourceID() < resourceID) {
             low = mid + 1; //target is in the right half
         }
         else {

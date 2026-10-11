@@ -77,7 +77,7 @@ public:
 
     //Sorts the internal resources vector in place by ID through ascending order
     //Must be called before searchResourceByID() to work correctly
-    void sortResourceByID();
+    void sortResourcesByID();
 
     //Sorts the internal resources vector in place by resource name, A to Z
     void sortResourcesByName();

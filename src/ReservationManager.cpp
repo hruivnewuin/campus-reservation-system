@@ -43,7 +43,7 @@ bool ReservationManager::loadFromFile(const std::string& filename) {
         // Validate that IDs are positive (invalid input management)
         if (resID <= 0 || studID <= 0) {
             std::cerr << "Skipping line with invalid negative/ zero ID: " << line << std::endl;
-            continue:
+            continue;
         }
 
         Reservation res(resID, studID, studName, resourceID, date);
@@ -75,8 +75,8 @@ ReservationManager::~ReservationManager() {
 validates against duplicate rservation IDs
 */
 bool ReservationManager::insertReservation(const Reservation& reservation) {
-    if (findReservationByID(reservation.getReservationID()) != nullptr{
-        std::cerr << "Error: Reservation ID " << rerservation.getReservationID() << " already exists. Insertion failed." << std::endl;
+    if (findReservationByID(reservation.getReservationID()) != nullptr) {
+        std::cerr << "Error: Reservation ID " << reservation.getReservationID() << " already exists. Insertion failed." << std::endl;
     return false;
     }
         

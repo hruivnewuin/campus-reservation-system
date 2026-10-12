@@ -29,6 +29,7 @@ In this markdown, each person will log per work as logs.
 10/1| Faith Paredes  | src/ & include/ | update Resource.h and Reservation.cpp | commits eeb1313 and 4a431c0
 
 10/10 | Faith Paredes  | src/ | update Main.cpp | commit 791ede9
+
 10/11 | Isiah Ndanzia | Verified that WaitingList.cpp, CanellationHistory.cpp, Reservationrecord.h, waitinglist.h, cancellationhistory.h do not contain any errors that may impact performance
 
 

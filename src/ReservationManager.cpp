@@ -5,7 +5,6 @@
 /* Default constructor initializing an empty linked list
 Time complexity: 0(1)
 */
-
 ReservationManager::ReservationManager() : head(nullptr), count(0), nextReservationID(1) {}
 
 /*The expected file format is pipe delimited

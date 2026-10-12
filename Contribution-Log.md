@@ -24,5 +24,13 @@ In this markdown, each person will log per work as logs.
 
 09/19 | Faith Paredes | src/ & include/ | Created and uploaded the new Resource.h and Resource.cpp files and uploaded Main.cpp and ReservationManager.cpp | commits d4b727a, f9cc1d9, 1630afd, fc1fc49
 
-09/20 | Faith Paredes | repo | Merged branch into main with minor edits to README.txt | ece3519
+09/20 | Faith Paredes | Merged branch into main with minor edits to README.txt | ece3519
+
+10/1| Faith Paredes  | src/ & include/ | update Resource.h and Reservation.cpp | commits eeb1313 and 4a431c0
+
+10/10 | Faith Paredes  | src/ | update Main.cpp | commit 791ede9
+
+10/11 | Isiah Ndanzia | Verified that WaitingList.cpp, CanellationHistory.cpp, Reservationrecord.h, waitinglist.h, cancellationhistory.h do not contain any errors that may impact performance
+
+
 

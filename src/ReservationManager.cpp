@@ -74,7 +74,7 @@ ReservationManager::~ReservationManager() {
 validates against duplicate rservation IDs
 */
 bool ReservationManager::insertReservation(const Reservation& reservation) {
-    if (findReservationByID(reservation.getReservationID()) != nullptr){
+    if (findReservationByID(reservation.getReservationID()) != nullptr) {
         std::cerr << "Error: Reservation ID " << reservation.getReservationID() << " already exists. Insertion failed." << std::endl;
     return false;
     }

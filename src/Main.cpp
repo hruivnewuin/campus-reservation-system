@@ -26,7 +26,9 @@ static void printMenu() {
     std::cout << "5. Undo Cancellation\n";
     std::cout << "6. Display Active Reservations\n";
     std::cout << "7. Display Cancellation History\n";
-    std::cout << "8. Exit\n";
+    std::cout << "8. Sort Resources\n";
+    std::cout << "9. Search Resource by ID\n";
+    std::cout << "10. Exit\n";
     std::cout << "Enter Choice: ";  
 }
 //reservation class and reservationrecord are two different shared types.
@@ -54,6 +56,9 @@ int main() {
     //one waiting list per resource, created on first use
     std::map<std::string, WaitingList> waitingLists;
 
+    //tracks whether the resource vector is sorted by ID
+    //binary search only works on data that sorted by ID. Only resorted when it's false
+    bool resourcesSortedByID = false;
     if (!resourceManager.loadFromFile("data/resources.txt")) {
         std::cout << "Warning: continuing with an empty resource list.\n";
     }
@@ -82,6 +87,8 @@ int main() {
             std::cout << "\n--- All Resources ---\n";
             resourceManager.displayAllResources();
             std::cout << "\n--- Available Resources ---\n";
+            resourceManager.displayAvailability();
+           
             break;
         }
         case 2: {
@@ -206,9 +213,56 @@ int main() {
             break;
         }
         case 8: {
-            running = false;
-            std::cout << "Goodbye!\n";
+            int sort Choice;
+            std::cout << "Sort resources by:\n";
+            std::cout << "1. Resource ID\n";
+            std::cout << "2. Resource Name\n";
+            std::cout << "Enter Choice: ";
+            if (std::cin.fail()) {
+                clearInputError();
+                std::cout << "Invalid input, please input 1 or 2.\n";
+                break;
+            }
+            if (sortChoice == 1) {
+                resourceManager.sortResourcesByID();
+                resourcesSortedByID = true;
+                std::cout << "\n--- Resources Sorted by ID ---\n";
+            }
+            else if (sortChoice == 2) {
+                resourceManager.sortResourcesByName();
+                resourcesSortedByID = false;
+                std::cout << "\n--- Resources Sorted by Name ---\n";
+            }
+            else {
+                std::cout << "Invalid choice, please enter 1 or 2.\n";
+                break;
+            }
+            resourceManager.displayAllResources();
             break;
+        }
+        case 9: {
+            std::string searchID;
+            std::cout << "Enter Resource ID to search for: ";
+            std::cin >> searchID;
+
+            //binary search needs the data to be sorted by ID first
+            if (!resourcesSortedByID) {
+                resourceManager.sortResourcesByID();
+                resourcesSortedByID = true;
+            }
+            Resource* found = resourceManager.searchResourceByID(searchID);
+            if (found != nullptr) {
+                std::cout << "Resource found:\n";
+                found->display();
+            }
+            else {
+                std::cout << "No resource found with ID " << searchID << ".\n";
+            }
+            break;
+        }
+            case 10: {
+                running = false;
+                std::cout << "Goodbye!\n";
         }
         default:
             std::cout << "Invalid choice. Please select an option from the menu.\n";

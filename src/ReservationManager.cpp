@@ -195,3 +195,18 @@ if (!found){
     std::cout << "No active reservations found for student ID" << studentID << "." << std:endl;
 }
 }
+/* This will count how many active reservations exist for a specific resource.
+Time complexity: 0(n)
+*/
+int ReservationManager::getreservationCountForResource(const std::string& resourceID) const{
+    int resourceCount = 0;
+    ReservationNode* current = head;
+
+    While (current != nullptr){
+      if (current->data.getResourceID() == resourceID) {
+        resourceCount++;
+      }
+      current = current->next;
+    }
+    return resourceCount;
+}

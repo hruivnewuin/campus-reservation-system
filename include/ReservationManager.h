@@ -19,6 +19,11 @@ private:
     ReservationNode* head;
     int count;
     int nextReservationID; // used to auto generate/validate unique IDs
+    // merge sort functions
+    void mergeSort(ReservationNode** headRef);
+    ReservationNode* mergeSortedLists(ReservationNode* a, ReservationNode* b);
+    void splitList(ReservationNode* source, ReservationNode** frontRef, ReservationNode** backRef);
+    bool isDateEarlier(const std::string& date1, const std::string& date2) const;
 public:
     ReservationManager();
     ~ReservationManager(); //must free all nodes
@@ -44,6 +49,8 @@ public:
     //returns a point to the node's data or nullptr if not found
     Reservation* findReservationByID(int reservationID);
 
+    // Merge sort by date
+    void sortReservationsByDate();
     //Linear search for all reservations by a specific student
     void searchByStudentID(int studentID) const;
     //validates a reservation request against business rules

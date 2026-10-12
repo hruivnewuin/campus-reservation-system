@@ -44,6 +44,8 @@ public:
     //returns a point to the node's data or nullptr if not found
     Reservation* findReservationByID(int reservationID);
 
+    void searchByStudentID(int studentID) const;
+
     //validates a reservation request against business rules
     // resource must exist and be available
     // reservation ID must not already be in use

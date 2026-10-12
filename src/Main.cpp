@@ -213,7 +213,7 @@ int main() {
             break;
         }
         case 8: {
-            int sort Choice;
+            int sortChoice;
             std::cout << "Sort resources by:\n";
             std::cout << "1. Resource ID\n";
             std::cout << "2. Resource Name\n";

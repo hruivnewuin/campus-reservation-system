@@ -202,7 +202,7 @@ int ReservationManager::getReservationCountForResource(const std::string& resour
     int resourceCount = 0;
     ReservationNode* current = head;
 
-    While (current != nullptr){
+    while (current != nullptr){
       if (current->data.getResourceID() == resourceID) {
         resourceCount++;
       }

@@ -54,6 +54,7 @@ public:
     bool validateReservationRequest(const Reservation& reservation, ResourceManager& resourceManager) const;
 
     int getActiveReservationCount() const;
+    int getReservationCountForResource(const std::string& resourceID) const;
     int generateNextReservationID();
 };
 #endif //RESERVATION_MANAGER_H

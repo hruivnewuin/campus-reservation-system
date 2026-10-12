@@ -176,3 +176,23 @@ int ReservationManager::getActiveReservationCount() const {
 int ReservationManager::generateNextReservationID() {
     return nextReservationID++;
 }
+/* Linear Search to find and display all reservations for specific students/
+Time complexity: 0(n)
+*/
+void ReservationManager::searchByStudentID(int studentID) const{
+    bool found = false;
+    ReservationNode* current = head;
+
+    std::cout <<"--- Reservations for student ID: " << studentID << "---" << std::endl;
+//linear search 
+while (current != nullptr){
+    if (current->data.getStudentID() == studentID){
+        current->data.display();
+        found = true;
+    }
+    current = current->next;
+}
+if (!found){
+    std::cout << "No active reservations found for student ID" << studentID << "." << std:endl;
+}
+}

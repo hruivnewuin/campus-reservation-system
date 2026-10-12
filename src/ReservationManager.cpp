@@ -5,7 +5,6 @@
 /* Default constructor initializing an empty linked list
 Time complexity: 0(1)
 */
-
 ReservationManager::ReservationManager() : head(nullptr), count(0), nextReservationID(1) {}
 
 /*The expected file format is pipe delimited
@@ -175,4 +174,39 @@ int ReservationManager::getActiveReservationCount() const {
 // Generations next available unique reservation ID
 int ReservationManager::generateNextReservationID() {
     return nextReservationID++;
+}
+/* Linear Search to find and display all reservations for specific students/
+Time complexity: 0(n)
+*/
+void ReservationManager::searchByStudentID(int studentID) const{
+    bool found = false;
+    ReservationNode* current = head;
+
+    std::cout <<"--- Reservations for student ID: " << studentID << "---" << std::endl;
+//linear search 
+while (current != nullptr){
+    if (current->data.getStudentID() == studentID){
+        current->data.display();
+        found = true;
+    }
+    current = current->next;
+}
+if (!found){
+    std::cout << "No active reservations found for student ID" << studentID << "." << std:endl;
+}
+}
+/* This will count how many active reservations exist for a specific resource.
+Time complexity: 0(n)
+*/
+int ReservationManager::getreservationCountForResource(const std::string& resourceID) const{
+    int resourceCount = 0;
+    ReservationNode* current = head;
+
+    While (current != nullptr){
+      if (current->data.getResourceID() == resourceID) {
+        resourceCount++;
+      }
+      current = current->next;
+    }
+    return resourceCount;
 }
